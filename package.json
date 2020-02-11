@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/tda1312/OnlineLateXEditorAPI#readme",
   "dependencies": {
+    "express": "^4.17.1",
     "http": "0.0.0",
     "mime": "^2.4.4",
     "path": "^0.12.7",
