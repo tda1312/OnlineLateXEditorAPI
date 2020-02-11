@@ -3,7 +3,7 @@ const child_process = require('child_process')
 const path = require('path')
 
 // Service for compiling
-const compileLateX = (body, callback) => {
+const compileLateX = (body, res, callback) => {
     fs.writeFile('input.tex', body, (error) => {
         if (error) {
             console.log("writeFile error!")
@@ -13,6 +13,7 @@ const compileLateX = (body, callback) => {
         return callback(null)
     })
 
+    // Compile latex to pdf
     runScript('pdflatex', ['input.tex'], (error, exit_code) => {
         if (error) {
             console.log(error)
@@ -22,7 +23,20 @@ const compileLateX = (body, callback) => {
         console.log("Closing code: " + exit_code)
     })
 
-    let files = ['input.aux', 'input.log', 'input.tex', 'input.pdf']
+    // Return pdf file
+    fs.readFile('input.pdf', (error, data) => {
+        if (error) {
+            console.log("readFile error!")
+            return callback(error)
+        }
+        console.log("readFile executed!")
+        res.set({
+            'content-type': 'application/pdf; charset=utf-8' 
+        })
+        res.send(data)
+    })
+
+    // let files = ['input.aux', 'input.log', 'input.tex', 'input.pdf']
 
     // deleteFiles(files, (error) => {
     //     if (error) {

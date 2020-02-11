@@ -1,6 +1,7 @@
 const {
     generateIndex,
-    getInputLateX
+    getInputLateX,
+    getOutputLateX
 } = require('./controller')
 const router = require('express').Router()
 

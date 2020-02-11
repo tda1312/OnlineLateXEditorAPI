@@ -1,4 +1,7 @@
-const {compileLateX} = require('./service')
+const {
+    compileLateX,
+    downloadLateX
+} = require('./service')
 const path = require('path')
 
 const generateIndex = (req, res) => {
@@ -6,7 +9,7 @@ const generateIndex = (req, res) => {
 }
 
 const getInputLateX = (req, res) => {
-    compileLateX(req.body.Input, (error) => {
+    compileLateX(req.body.Input, res, (error) => {
         if (error) {
             console.log(error)
             return
