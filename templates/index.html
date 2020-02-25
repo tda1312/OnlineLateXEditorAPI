@@ -1,11 +1,75 @@
-<html>
-    <p>I hate you</p>
-    <form action="/compile" method="POST">
-        <input type="text" name="Compile">
-        <button type="submit">Compile</button>
-    </form>
-    <form action="/download" method="GET">
-        <input type="text" name="Download">
-        <button type="submit">Download</button>
-    </form>
+<!doctype html>
+
+<html lang='en'>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            #pdf_viewer {
+                width: 800px;
+                height: 450px;
+                overflow: auto;
+                background: #333;
+                text-align: center;
+                border: solid 3px;
+            }
+        </style>
+    </head>
+    <body>
+        <p>I hate you</p>
+        <form action='/compile' method="POST">
+            <input type="text" name="Compile">
+            <button type="submit" >Compile</button>
+        </form>
+        <form action='/download' method="GET">
+            <input type="text" name="Download">
+            <button type="submit">Download</button>
+        </form>
+        <div id='pdf_viewer'>
+            <canvas id='pdf_renderer'></canvas>
+        </div>
+        <div id='pdf_navigation'>
+            <button id="go_previous">Previous</button>
+            <input id="current_page" value="1" type="number"/>
+            <button id="go_next">Next</button>
+        </div>
+        <div id="pdf_zoom">
+            <button id="zoom_in">+</button>
+            <button id="zoom_out">-</button>
+        </div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.0.943/pdf.min.js">
+            var myState = {
+                pdf: null,
+                currentPage: 1,
+                zoom: 1
+            }
+            
+            document.getElementById('button_compile').addEventListener('click', getPDF());
+
+            function getPDF() {
+                pdfjsLib.getDocument('./.pdf').then((pdf) => {
+                    myState.pdf = pdf;
+                    render();
+                });
+            }
+
+            function render() {
+                myState.pdf.getPage(myState.currentPage).then((page) => {
+                    var canvas = document.getElementById("pdf_renderer");
+                    var ctx = canvas.getContext('2d');
+
+                    var viewport = page.getViewport(myState.zoom);
+
+                    canvas.width = viewport.width;
+                    canvas.height = viewport.height;
+
+                    page.render({
+                        canvasContext: ctx,
+                        viewport: viewport
+                    });
+                })
+            }
+        </script>
+    </body>
 </html>

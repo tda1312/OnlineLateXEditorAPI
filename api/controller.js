@@ -9,7 +9,7 @@ const generateIndex = (req, res) => {
 }
 
 const getInputLateX = (req, res) => {
-    compileLateX(req.body.Input, res, (error) => {
+    compileLateX(req.body.Compile, res, (error) => {
         if (error) {
             console.log(error)
             return

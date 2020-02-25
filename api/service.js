@@ -14,13 +14,14 @@ const compileLateX = (body, res, callback) => {
     })
 
     // Compile latex to pdf
-    runScript('pdflatex', ['input.tex'], (error, exit_code) => {
+    runScript('pdflatex', ['input.tex'], (error) => {
         if (error) {
             console.log(error)
             return callback(error)
         }
         console.log("Process finished.")
-        console.log("Closing code: " + exit_code)
+        console.log("Closing")
+        callback(null)
     })
 
     // Return pdf file
@@ -53,6 +54,7 @@ const runScript = (command, args, callback) => {
     const child = child_process.spawn(command, args)
 
     child.on('close', (code) => {
+        console.log(`child process exited with code ${code}`);
         callback(code)
     })
 }
