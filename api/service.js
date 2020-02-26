@@ -3,17 +3,18 @@ const child_process = require('child_process')
 const path = require('path')
 
 // Service for compiling
-const compileLateX = (body, res, callback) => {
+const compileLateX = (body, res) => {
     fs.writeFile('input.tex', body, (error) => {
         if (error) {
             console.log("writeFile error!")
             return callback(error)
         }
         console.log("writeFile executed!")
-        return callback(null)
+        compileProcess()
     })
 
-    // Compile latex to pdf
+// Compile latex to pdf
+const compileProcess = () => {    
     runScript('pdflatex', ['input.tex'], (error) => {
         if (error) {
             console.log(error)
@@ -21,10 +22,12 @@ const compileLateX = (body, res, callback) => {
         }
         console.log("Process finished.")
         console.log("Closing")
-        callback(null)
+        // displayLateX()
     })
+}
 
-    // Return pdf file
+// Return pdf file
+const displayLateX = () => {
     fs.readFile('input.pdf', (error, data) => {
         if (error) {
             console.log("readFile error!")
@@ -36,6 +39,7 @@ const compileLateX = (body, res, callback) => {
         })
         res.send(data)
     })
+}
 
     // let files = ['input.aux', 'input.log', 'input.tex', 'input.pdf']
 
@@ -93,6 +97,7 @@ const downloadLateX = (res, callback) => {
     }
 }
 
+// Check if pdf is available
 const checkFile = (file, callback) => {
     fs.access(file, fs.F_OK, (error) => {
         if (error) {
