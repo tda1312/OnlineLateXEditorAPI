@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 
 <html lang='en'>
     <head>
@@ -14,17 +14,20 @@
                 border: solid 3px;
             }
         </style>
+        <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@2.2.228/build/pdf.min.js"></script>
     </head>
     <body>
+        <p id=textBoxId></p>
         <p>I hate you</p>
         <form action='/compile' method="POST">
             <input type="text" name="Compile">
-            <button type="submit" >Compile</button>
+            <button type="submit" id='button_compile'>Compile</button>
         </form>
         <form action='/download' method="GET">
             <input type="text" name="Download">
             <button type="submit">Download</button>
         </form>
+        <button id='button_check'>Yo</button>
         <div id='pdf_viewer'>
             <canvas id='pdf_renderer'></canvas>
         </div>
@@ -38,19 +41,31 @@
             <button id="zoom_out">-</button>
         </div>
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.0.943/pdf.min.js">
+        <script type="text/javascript">
             var myState = {
                 pdf: null,
                 currentPage: 1,
                 zoom: 1
             }
-            
-            document.getElementById('button_compile').addEventListener('click', getPDF());
 
-            function getPDF() {
-                pdfjsLib.getDocument('./.pdf').then((pdf) => {
+            async function wait(ms) {
+                return new Promise(resolve => {
+                    setTimeout(resolve, ms);
+                });
+            }
+
+            document.getElementById('button_compile').addEventListener('click', getPDF);
+
+            async function getPDF() {
+                await wait(5000)
+                window.alert('hello2')
+                console.log("Here we go!")
+                pdfjsLib.getDocument('/compile/input.pdf').promise.then((pdf) => {
+                    console.log("PDF loaded")
                     myState.pdf = pdf;
                     render();
+                }, (reason) => {
+                    console.error(reason)
                 });
             }
 
@@ -64,10 +79,13 @@
                     canvas.width = viewport.width;
                     canvas.height = viewport.height;
 
-                    page.render({
+                    var renderTask = page.render({
                         canvasContext: ctx,
                         viewport: viewport
                     });
+                    renderTask.promise.then(() => {
+                        console.log("Page rendered")
+                    })
                 })
             }
         </script>

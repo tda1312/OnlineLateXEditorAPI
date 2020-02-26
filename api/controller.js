@@ -1,6 +1,7 @@
 const {
     compileLateX,
-    downloadLateX
+    downloadLateX,
+    displayLateX
 } = require('./service')
 const path = require('path')
 
@@ -11,7 +12,7 @@ const generateIndex = (req, res) => {
 const getInputLateX = (req, res) => {
     compileLateX(req.body.Compile, res, (error) => {
         if (error) {
-            console.log(error)
+            console.error(error)
             return
         }
     })
@@ -20,8 +21,16 @@ const getInputLateX = (req, res) => {
 const getOutputLateX = (req, res) => {
     downloadLateX(res, (error) => {
         if (error) {
-            console.log(error)
+            console.error(error)
             return
+        }
+    })
+}
+
+const getPDF = (req, res) => {
+    displayLateX(res, (error) => {
+        if (error) {
+            console.error(error)
         }
     })
 }
@@ -29,5 +38,6 @@ const getOutputLateX = (req, res) => {
 module.exports = {
     generateIndex,
     getInputLateX,
-    getOutputLateX
+    getOutputLateX,
+    getPDF
 }

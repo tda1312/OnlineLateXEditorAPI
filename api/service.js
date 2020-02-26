@@ -3,18 +3,20 @@ const child_process = require('child_process')
 const path = require('path')
 
 // Service for compiling
-const compileLateX = (body, res) => {
+const compileLateX = (body, res, callback) => {
     fs.writeFile('input.tex', body, (error) => {
         if (error) {
             console.log("writeFile error!")
-            return callback(error)
+            return
         }
         console.log("writeFile executed!")
         compileProcess()
+        return
     })
+}
 
 // Compile latex to pdf
-const compileProcess = () => {    
+const compileProcess = (callback) => {    
     runScript('pdflatex', ['input.tex'], (error) => {
         if (error) {
             console.log(error)
@@ -22,35 +24,44 @@ const compileProcess = () => {
         }
         console.log("Process finished.")
         console.log("Closing")
-        // displayLateX()
+        return
     })
 }
 
 // Return pdf file
-const displayLateX = () => {
-    fs.readFile('input.pdf', (error, data) => {
+const displayLateX = (res, callback) => {
+    file = 'input.pdf'
+    checkFile(file, (error) => {
         if (error) {
-            console.log("readFile error!")
-            return callback(error)
+            console.log("Error checking file")
+            return displayLateX(res)
         }
-        console.log("readFile executed!")
-        res.set({
-            'content-type': 'application/pdf; charset=utf-8' 
+        console.log("Checked file")
+
+        fs.readFile(file, (error, data) => {
+            if (error) {
+                console.log("readFile error!")
+                return
+            }
+            console.log("readFile executed!")
+            res.set({
+                'content-type': 'application/pdf; charset=utf-8' 
+            })
+            res.send(data)
+            return
         })
-        res.send(data)
     })
 }
 
-    // let files = ['input.aux', 'input.log', 'input.tex', 'input.pdf']
+// let files = ['input.aux', 'input.log', 'input.tex', 'input.pdf']
 
-    // deleteFiles(files, (error) => {
-    //     if (error) {
-    //         console.log(error)
-    //     } else {
-    //         console.log("Cleaning complete.")
-    //     }
-    // })
-}
+// deleteFiles(files, (error) => {
+//     if (error) {
+//         console.log(error)
+//     } else {
+//         console.log("Cleaning complete.")
+//     }
+// })
 
 const runScript = (command, args, callback) => {
     console.log("Starting process.")
@@ -99,9 +110,8 @@ const downloadLateX = (res, callback) => {
 
 // Check if pdf is available
 const checkFile = (file, callback) => {
-    fs.access(file, fs.F_OK, (error) => {
+    fs.access(file, (error) => {
         if (error) {
-            console.log(error)
             callback(error)
             return false
         } else {
@@ -113,5 +123,6 @@ const checkFile = (file, callback) => {
 
 module.exports = {
     compileLateX,
+    displayLateX,
     downloadLateX
 }
