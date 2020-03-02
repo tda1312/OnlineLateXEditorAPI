@@ -1,0 +1,160 @@
+
+
+.container{
+	height: 100%;
+	width: 100%;
+	
+
+}
+.header{
+	padding: 10px;
+}
+
+#pdf_viewer {
+	width: 800px;
+	height: 450px;
+	overflow: auto;
+	background: #333;
+	text-align: center;
+	border: solid 3px;
+}
+
+.body-layout{
+	margin-top: 100px;
+	border: 1px solid #eaeaea;
+	height: 100%;
+	width: 100%;
+}
+.editor{
+	float: left;
+	width: 48%;
+	border: 1px solid #eaeaea;
+	margin: 10px;
+
+}
+
+.editor-toolbar{
+	height: 50px;
+    background-color: #2c3645;
+    /* overflow: hidden;
+    position: relative;
+    z-index: 10; */
+
+}
+.editor-layout{
+	width: 100%;
+	height: 100%;
+
+
+}
+
+
+.preview{
+	float: right;
+	width: 48%;
+	border: 1px solid #eaeaea;
+	margin: 10px;
+}
+
+.preview-toolbar{
+	height: 50px;
+    background-color: #2c3645;
+    padding-right: 5px;
+
+}
+.preview-layout{
+	width: 50%;
+	height: 100%;
+
+
+}
+
+/* .ace_editor{
+	position: relative;
+    overflow: hidden;
+    font: 12px/normal 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;
+    direction: ltr;
+    text-align: left;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+.ace-tm{
+	background-color: #FFFFFF;
+    color: black;
+} */
+
+/* .line-nums{
+	font-size:13px;
+	line-height:13px;
+	padding:10px 4px;
+	font-family: monospace;
+  	background: #EEE;
+	position: absolute;
+	width: 20px;
+	left: -28px;
+	bottom: 0;
+	top: 0;
+	text-align:right;
+	border:1px solid #999;
+	height: 555px;
+	float: right;
+} */
+
+.rownr {float:left ; width: 10%;background-color: rgb(105,105,105); color: white; text-align: right; vertical-align:top; resize:none; overflow: hidden;}
+.txt { float:left;overflow-x: scroll; background: transparent; z-index: 0 ;resize: none; border: none; outline: none; width:90%; white-space: nowrap; }
+
+.cl{
+	height: 50px;
+	width: 100px;
+	position: relative;
+	color: whitesmoke;
+	padding: auto;
+
+}
+
+.cl2{
+	position: absolute;
+      top: 50px;
+      display:none;
+    
+
+
+
+}
+.cl:hover .cl2{
+  display:inline;
+}
+ul{
+ margin: 0px;
+ padding: 0px;
+
+}
+.cl2 ul li {
+    list-style-type: none;
+    border-bottom:1px solid #eaeaea;
+    padding: 10px 20px;
+    background: rgb(105,105,105);
+
+
+
+
+}
+ul li a {
+	text-decoration: none; 
+    color:black;
+
+}
+ul li:hover{
+	background:rgb(105,105,105);
+
+}
+ul li:hover a{
+	color:white;
+}
+
+#button{
+	float: right;
+	margin-top: 10px;
+	margin-right: 10px;
+	
+	
+}

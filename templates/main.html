@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<link rel="stylesheet" href="latex.css">
+	<link rel="stylesheet" href="login.css">
+	<script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@2.2.228/build/pdf.min.js"></script>
+	<script src="main.js" ></script>
+	<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<!-- <script src="vendor/jquery/jquery.slim.min.js"></script> 
+  	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>  -->
+
+</head>
+<body>
+	<div class="container">
+		<div class="header">
+			<nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+				<div class="container">
+				  <a class="navbar-brand" href="#">Latex editor online</a>
+				  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				  </button>
+				  <div class="collapse navbar-collapse" id="navbarResponsive">
+					<ul class="navbar-nav ml-auto">
+					    <div class="cl"  > 
+							<p>Your Profile</p>
+							<div class="cl2"  >
+								<ul>
+									<li><a href="login.html">Login</a></li>
+									<li><a href="">Register</a></li>
+								</ul>	
+							</div>
+						</div>
+					</ul>
+				  </div>
+				</div>
+			  </nav>
+	 
+	 
+		</div>
+ <div class="body-layout">
+			<div class="editor">
+				<div class="editor-toolbar">
+					<button id="button_compile" type="button" class="btn btn-primary btn-sm" onclick="compile()">Compile</button>
+				</div>
+					<div class="editor-layout">
+						<textarea class="rownr" rows="20" value="1" readonly></textarea>
+						<form action="/compile" id="form_edit" method="POST">
+							<textarea name="edit_body" id="text_body" class="txt" rows="20" cols="150" nowrap="nowrap" wrap="off"
+								autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+								onclick="selectionchanged(this)" onkeyup="keyup(this,event)" oninput="input_changed(this)" onscroll="scroll_changed(this)"></textarea><br/><br/>
+						</form>
+
+					<!-- <textarea id="line_numbers"></textarea> -->
+        			</div>
+			</div>
+			<div class="preview">
+			<div class="preview-toolbar"></div>
+			<div class="preview-layout">
+				<!-- <embed src="C:\Users\Admin\Desktop\New folder\FinalWeb.Latex\nguyenkhanhnam.pdf" type="" width="800px" height="2100px"> -->
+				<canvas id='pdf_renderer'></canvas>
+			</div>
+			</div>
+			<div id='pdf_navigation'>
+				<button id="go_previous">Previous</button>
+				<input id="current_page" value="1" type="number"/>
+				<button id="go_next">Next</button>
+			</div>
+			<div id="pdf_zoom">
+				<button id="zoom_in">+</button>
+				<button id="zoom_out">-</button>
+			</div>
+		</div>
+	</div>
+	
+</body>
+</html>

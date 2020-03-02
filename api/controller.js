@@ -6,11 +6,11 @@ const {
 const path = require('path')
 
 const generateIndex = (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'index.html'))
+    res.sendFile(path.resolve(__dirname, '../templates', 'main.html'))
 }
 
 const getInputLateX = (req, res) => {
-    compileLateX(req.body.Compile, res, (error) => {
+    compileLateX(req.body.edit_body, res, (error) => {
         if (error) {
             console.error(error)
             return
